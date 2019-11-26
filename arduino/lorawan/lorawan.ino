@@ -12,8 +12,8 @@
 #define RX_PIN  11  // D11: UART_TX 送信用
 
 // Data Rate (拡散率＋バンド幅)
-#define SF_12 0 // Long Range / Low Rate
-#define SF_11 1
+#define SF_12 0 // (do not use in japan) Long Range / Low Rate
+#define SF_11 1 // (do not use in japan)
 #define SF_10 2
 #define SF_9 3
 #define SF_8 4
@@ -43,9 +43,14 @@ void setup() {
     String deveui = LoRaWAN.getData();
     Serial.println("deveui:" + deveui);
   }
+  // TODO: Set Adaptive Rate
+  if (LoRaWAN.setAdr(ADR_OFF)) {
+    Serial.println(F("adaptive rate off"));
+  }
   // TODO: データレート調整
-  if (LoRaWAN.setDataRate(SF_12)) {
-    Serial.println("lora data rate is %d", SF_12)
+  if (LoRaWAN.setDataRate(SF_10)) {
+    Serial.print(F("lora data rate is: "));
+    Serial.println(SF_10);
   }
 }
 
@@ -59,7 +64,18 @@ void loop() {
        LoRaWAN.txRequest()    &&
        LoRaWAN.txResult()     )
   {
-    Serial.println(F("tx_ok"));
+    // current data rate is: hoge,max payload size is: hoge,tx_ok: hoge
+    Serial.print(F("current data rate is: "));
+    Serial.print(LoRaWAN.getDataRate());
+    Serial.print(F(", "));
+    
+    Serial.print(F("max payload size is: "));
+    Serial.print(LoRaWAN.getMaxPayloadSize(LoRaWAN.getDataRate()));
+    Serial.print(F(", "));
+    
+    Serial.print(F("tx_ok: "));
+    Serial.println((ms));
   }
-  delay(10000);
+  // 10秒に一回送信する
+  delay(1000);
 }
