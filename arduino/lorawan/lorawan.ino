@@ -23,11 +23,6 @@
 // Instance
 LoRaWAN_TLM922S_SoftwareSerial LoRaWAN(RX_PIN, TX_PIN);
 
-// ProtoType: Function declarations
-int cmd_help();
-int cmd_led();
-int cmd_exit();
-
 void setup() {
   while (!Serial);
   Serial.begin(9600);
@@ -57,10 +52,10 @@ void setup() {
 void loop() {
   // TODO: 任意のデータを調整
   // TODO: 送信データサイズを取得 (Sensewayは，GPS（緯度，高度，経度），10バイト(20桁の16進数表記)のデータを送信)
-  uint32_t ms = millis();    // or user sensor data
-
+  //uint32_t ms = millis();    // or user sensor data
+  uint32_t data = 30;
   if ( LoRaWAN.tx(TX_UCNF, 1) &&
-       LoRaWAN.txData(ms)     &&
+       LoRaWAN.txData(data)     &&
        LoRaWAN.txRequest()    &&
        LoRaWAN.txResult()     )
   {
@@ -74,8 +69,11 @@ void loop() {
     Serial.print(F(", "));
     
     Serial.print(F("tx_ok: "));
-    Serial.println((ms));
+    Serial.println((data));
   }
+  // on sleep
+  LoRaWAN.sleep(0);
   // 10秒に一回送信する
-  delay(1000);
+  delay(400);
+  LoRaWAN.wakeUp();
 }
