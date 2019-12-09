@@ -27,53 +27,38 @@ void setup() {
   while (!Serial);
   Serial.begin(9600);
   LoRaWAN.begin(9600);
-  while (! LoRaWAN.getReady()     ) delay(1000);
-  while (! LoRaWAN.factoryReset() ) delay(1000);
+  while (! LoRaWAN.getReady()     );
+  while (! LoRaWAN.factoryReset() );
   while (!( LoRaWAN.join(JOIN_OTAA) &&
-            LoRaWAN.joinResult() )) delay(1000);
-  Serial.println(F("join accepted"));
-
-  // TASK: Get DEVEUI
-  if (LoRaWAN.getDevEUI() && LoRaWAN.isData()) {
-    String deveui = LoRaWAN.getData();
-    Serial.println("deveui:" + deveui);
-  }
-  // TODO: Set Adaptive Rate
+            LoRaWAN.joinResult() ));
+  // --- set up data rate ---
   if (LoRaWAN.setAdr(ADR_OFF)) {
     Serial.println(F("adaptive rate off"));
   }
-  // TODO: データレート調整
-  if (LoRaWAN.setDataRate(SF_10)) {
-    Serial.print(F("lora data rate is: "));
-    Serial.println(SF_10);
+  if (LoRaWAN.setDataRate(SF_8)) {
+    Serial.print(F("lora data rate is: 4"));
+  }
+  if (LoRaWAN.loraSave()) {
+    Serial.print(F("save state"));
   }
 }
-
+int count = 1;
 void loop() {
-  // TODO: 任意のデータを調整
-  // TODO: 送信データサイズを取得 (Sensewayは，GPS（緯度，高度，経度），10バイト(20桁の16進数表記)のデータを送信)
-  //uint32_t ms = millis();    // or user sensor data
-  uint32_t data = 30;
+  uint32_t data = LoRaWAN.getDataRate();
   if ( LoRaWAN.tx(TX_UCNF, 1) &&
        LoRaWAN.txData(data)     &&
        LoRaWAN.txRequest()    &&
-       LoRaWAN.txResult()     )
+       LoRaWAN.txResult())
   {
-    // current data rate is: hoge,max payload size is: hoge,tx_ok: hoge
-    Serial.print(F("current data rate is: "));
-    Serial.print(LoRaWAN.getDataRate());
-    Serial.print(F(", "));
-    
-    Serial.print(F("max payload size is: "));
-    Serial.print(LoRaWAN.getMaxPayloadSize(LoRaWAN.getDataRate()));
-    Serial.print(F(", "));
-    
-    Serial.print(F("tx_ok: "));
-    Serial.println((data));
+    Serial.println("count: " + String(count));
+    Serial.println("send data: " + String(data));
+    // --- enter sleep in 5 minutes ---
+    pinMode(7, OUTPUT);
+    digitalWrite(7, LOW);
+    if (LoRaWAN.sleep(0)) {
+      delay(5000);
+      digitalWrite(7, HIGH);
+    }
+    count++;
   }
-  // on sleep
-  LoRaWAN.sleep(0);
-  // 10秒に一回送信する
-  delay(400);
-  LoRaWAN.wakeUp();
 }
