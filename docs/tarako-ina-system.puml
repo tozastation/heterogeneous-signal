@@ -1,0 +1,36 @@
+@startuml
+title On Sensor Activation
+autonumber
+'Entity
+participant Sensor as sensor #ffb3ba
+participant Seed as seed <<extend Sensor>> #ffdfba
+participant Server as backend <<LoRaWAN Backend>> #ffffba
+participant Leader as leader <<extend Sensor>> #baffc9
+participant Group as group <<extend Sensor>> #bae1ff
+'Sequence
+sensor -> backend: join lorawan network
+note right
+elect search node randomly
+end note
+backend -> sensor: notify you are seed node or not
+autonumber stop
+sensor -> seed: (seed) become seed node
+sensor -> sensor: (not seed) enter deep sleep on LoRaWAN
+sensor -> sensor: (not seed) advertise on BLE
+autonumber resume
+note right
+(seed node)
+scan advertise data on BLE
+- UUID (2byte), RSSi
+end note
+seed -> backend: send surrounding sensor information
+'backend processing
+backend -> backend: collect data from seed node
+backend -> backend: eliminate duplicate node by RSSi (lower RSSi)
+backend -> seed: notify group construction
+seed -> leader: become leader node
+seed -> sensor: notify you send data to leader node
+sensor -> group: become group node
+group -> leader: send data on fixed interval
+leader -> backend: send aggregate data
+@enduml
