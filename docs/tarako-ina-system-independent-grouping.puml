@@ -1,0 +1,23 @@
+@startuml
+title Independent Grouping
+autonumber
+'Entity
+participant Leader as leader <<Sensor>> #e1f7d5
+participant Member as member <<Sensor>> #ffbdbd
+participant Server as backend <<LoRaWAN Backend>> #c9c9ff
+'Sequence
+member -> leader: send data on fixed interval (N second) on BLE
+leader -> backend: send aggregate data on LoRaWAN
+note right
+Payload:
+- sensor_data
+- sensor_rssi
+end note
+
+member -> leader: send data on fixed interval (N second) on BLE
+note left
+Reconstruct Group
+- relect leader by amount of power consumption
+end note
+leader -> member: notify you are new leader
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+title Concentratedly Grouping
+autonumber
+'Entity
+participant Leader as leader <<Sensor>> #e1f7d5
+participant Member as member <<Sensor>> #ffbdbd
+participant Server as backend <<LoRaWAN Backend>> #c9c9ff
+'Sequence
+leader -> backend: send aggregate data on LoRaWAN
+note right
+Payload:
+- sensor_data
+- sensor_rssi
+end note
+
+backend -> backend: reconstruct grouping
+backend -> leader: notify next grouping
+member -> leader: send data on fixed interval (N second) on BLE
+leader -> member: notify next leader
+leader -> backend: send aggregate data on LoRaWAN
+@enduml
