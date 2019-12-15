@@ -6,6 +6,7 @@ participant Leader as leader <<Sensor>> #e1f7d5
 participant Member as member <<Sensor>> #ffbdbd
 participant Server as backend <<LoRaWAN Backend>> #c9c9ff
 'Sequence
+Loop
 member -> leader: send data on fixed interval (N second) on BLE
 leader -> backend: send aggregate data on LoRaWAN
 note right
@@ -20,4 +21,5 @@ Reconstruct Group
 - relect leader by amount of power consumption
 end note
 leader -> member: notify you are new leader
+end
 @enduml

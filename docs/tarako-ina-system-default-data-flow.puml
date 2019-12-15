@@ -1,0 +1,16 @@
+@startuml
+title Default Data Flow
+autonumber
+'Entity
+participant Member as member <<Sensor>> #ffbdbd
+participant Leader as leader <<Sensor>> #e1f7d5
+participant Server as backend <<LoRaWAN Backend>> #c9c9ff
+'Sequence
+Loop
+
+member -> leader: send data on fixed interval (N second) on BLE
+leader -> backend: send aggregate data on LoRaWAN
+member -> member: start advertising leader node UUID for new sensor
+
+end
+@enduml

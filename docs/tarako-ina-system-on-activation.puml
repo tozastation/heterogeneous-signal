@@ -7,23 +7,31 @@ participant Sensor2 as sensor2 #ffbdbd
 participant Server as backend <<LoRaWAN Backend>> #c9c9ff
 'Sequence
 sensor1 -> backend: join lorawan network
+sensor1 -> sensor1: sleep for interval defined
+
 sensor2 -> backend: join lorawan network
+sensor2 -> sensor2: sleep for interval defined
 backend -> backend: elect search node randomly
 
-backend -> sensor2: notify you are advertise node
+sensor1 -> backend: ask I am Scan Node or Advertise Node
+backend -> sensor1: notify you are Scan Node
+note left #e1f7d5
+Scan Node
+end note
+sensor2 -> backend: ask I am Scan Node or Advertise Node
+backend -> sensor2: notify you are Advertise Node
 note left #ffbdbd
 Advertise Node
 end note
-sensor2 -> sensor2: enter deep sleep on LoRaWAN
-sensor2 -> sensor2: advertise on BLE
-backend -> sensor1: notify you are seed node (scan node)
-note left #e1f7d5
-Seed Node
-end note
-sensor1 -> sensor1: scan advertise data on BLE
+sensor2 -> sensor2: take deep sleep on LoRaWAN
+
+loop Time > Time Defined
+    sensor2 -> sensor2: advertise on BLE
+    sensor1 -> sensor1: scan surrounding Advertise Node
+end
 sensor1 -> backend: send surrounding sensor node information
 'backend processing
-backend -> backend: collect data from seed node
+backend -> backend: collect data
 backend -> backend: eliminate duplicate node by RSSi (lower RSSi)
 backend -> backend: crate group
 backend -> sensor1: notify you are leader node
