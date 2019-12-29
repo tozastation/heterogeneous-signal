@@ -1,0 +1,35 @@
+@startuml
+title On Sensor Activation
+'Entity
+participant Sensor1 as sensor1 #e1f7d5
+participant Sensor2 as sensor2 #ffbdbd
+participant Server as backend <<LoRaWAN Backend>> #c9c9ff
+'Sequence
+loop Time > Time Defined
+    sensor1 -> sensor1: advertise and scan surrounding node on BLE
+    sensor2 -> sensor2: advertise and scan surrounding node on BLE
+end
+autonumber
+sensor1 -> backend: join lorawan network and send nodes data on LoRaWAN Uplink
+sensor1 -> sensor1: continue to only advertise
+sensor2 -> backend: join lorawan network and send nodes data on LoRaWAN Uplink
+sensor2 -> sensor2: continue to only advertise
+
+backend -> backend: collect nodes information
+backend -> backend: eliminate duplicate node by RSSi (lower RSSi)
+backend -> backend: elect group leader and group member
+
+sensor1 -> backend: send sensor data on LoRaWAN Uplink
+backend -> sensor1: notify you are member and leader uuid on LoRaWAN Downlink
+note left #e1f7d5
+Member Node
+end note
+sensor1 -> sensor1: take deep sleep on LoRaWAN
+sensor1 -> sensor1: advertise leader uuid
+
+sensor2 -> backend: send sensor data on LoRaWAN Uplink
+backend -> sensor2: notify you are leader on LoRaWAN Downlink
+note left #ffbdbd
+Leader Node
+end note
+@enduml
