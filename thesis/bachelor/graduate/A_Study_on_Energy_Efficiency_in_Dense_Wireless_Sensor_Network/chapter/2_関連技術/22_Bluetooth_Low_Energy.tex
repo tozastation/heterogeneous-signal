@@ -1,0 +1,12 @@
+\section{Bluetooth Low Energy}
+BLEは，既存のBluetooth Classicよりも低電力を目的として開発された近距離通信用の通信規格である．BLEはスター型のトポロジーを採用し，送信側の周辺機器 (PD: Peripheral Device) と受信及び通信制御側のサーバ (CD: Central Device) の通信モデルである．BLEの伝送量は，1Mbpsである．
+
+\subsection{Peripheral Device}
+PDは，CDからの要求に応える形で通信する．デバイスの例としてビーコン等が挙げられる．BLEデバイスは，通信するにあたりペアリングする必要がある．アドバタイズ (Advertise) という自身のデバイス情報を報知する動作があり，アドバタイズインターバルという一定期間のもとブロードキャストで発信し続ける．
+
+\subsection{Central Device}
+CDは，PDとの接続要求を確立し通信を制御する．PDのAdvパケットを受信したのち，接続要求を行い要求を行い要求を行い接続を確立する．
+
+\subsection{Peripheral Device Data Frame}
+(のちに，提案システムのノードの参加時において，BLEパケットの中身にデータを載せる予定なのでそこの説明)
+前述のように，PDは自身の報知のため一定間隔で，Advを行う．下記にAdv Dataの詳細を記述する．
