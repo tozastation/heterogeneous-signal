@@ -1,2 +1,73 @@
 \section{実験方法}
-市販のArduino互換LoRaWANモジュール及び消費電力計を用いて，起動から初回送信，定常時の送信，スリープとイベントごとに消費電力を計測した．実験環境は，下記の表に示す．LoRaWANのノードとGWを，高低差のある公立はこだて未来大学と自宅間に配置した．距離は約３．５kmであった．消費電力計測機が保存できる容量に限りがあるため，３試行を１セットとした．LoRaWANのADR機能を適応し，スリープ時間は4秒に設定し，３０秒間の計測を４セット１２試行した．
+市販のArduino互換LoRaWANモジュール及び消費電力計を用いて，起動から初回送信，定常時の送信，スリープとイベントごとに消費電力を計測した．実験環境は，下記の表に示す．LoRaWANのノードとGWを，高低差のある公立はこだて未来大学と自宅間に配置した．距離は約３．５kmであった．消費電力計測機が保存できる容量に限りがあるため，３試行を１セットとした．LoRaWANのADR機能を適応し，スリープ時間は4秒に設定し，３０秒間の計測を４セット１２試行した．パケット到達率を算出するため，データ受信の確認する必要がある．本実測で利用したLoRaWANモジュールのプロバイダーは，MQTTブローカーが提供しているため，MQTTクライアントを用いてデータを取得した．
+
+\begin{table}[]
+    \caption{ARDUINO UNO REV3}\label{fig:Arduino_Spec}
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    動作電圧     & 5V   \\ \hline
+    DC電流     & 50mA \\ \hline
+    フラッシュメモリ & 32KB \\ \hline
+    SRAM     & 2KB  \\ \hline
+    EEPROM   & 1KB  \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[]
+    \caption{LoRaWAN Shield for Arduino}\label{fig:LoRaWAN_Spec}
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    電源電圧 & DC2.2 $\sim$3.6V      \\ \hline
+    周波数  & 920.6MHz $\sim$928MHz \\ \hline
+    動作温度 & 0°C $\sim$40 °C       \\ \hline
+    サイズ  & 68mm×53mm × 22.8mm    \\ \hline
+    無線規格 & LoRaWAN 1.0.2         \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[]
+    \caption{Kotomi Premium}\label{fig:Kotomi_Spec}
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    サイズ    & 77 x 35 x 13mm \\ \hline
+    ディスプレイ & 1.44インチ        \\ \hline
+    電圧精度   & 0.0001V        \\ \hline
+    電流制度   & 0.0001A        \\ \hline
+    電圧範囲   & 3.7～25V        \\ \hline
+    電流範囲   & 0～5A           \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[]
+    \caption{LoRaWAN Gateway}\label{fig:LoRaWAN_Gateway_Spec}
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    モデル名         & SW-GW01                       \\ \hline
+    チャンネル数       & 最大8ch                         \\ \hline
+    Wireless LAN & 802.11 b/g/n 2.4G             \\ \hline
+    送信出力         & 20mW (最大13 dBm)               \\ \hline
+    受信感度         & Down to -142 dBm              \\ \hline
+    動作温度         & -10ºC $\sim$55ºC              \\ \hline
+    電源電圧         & DC 5V / 2A（ミニUSBポート経由）        \\ \hline
+    インターフェース     & Ethernet x 1ポート, 3/4G USBドングル \\ \hline
+    サイズ          & L:116 x W:91 x H:27 mm        \\ \hline
+    重量           & 160g                          \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{table}[]
+    \caption{実測に用いた電源}\label{fig:LoRaWAN_Battery}
+    \centering
+    \begin{tabular}{|c|c|}
+    \hline
+    サイズ     & 72 x 70 x 31 (mm) \\ \hline
+    重量      & 189g              \\ \hline
+    バッテリー容量 & 5000mAh           \\ \hline
+    入力      & 5V=2A             \\ \hline
+    出力      & 5V=3A             \\ \hline
+    \end{tabular}
+\end{table}
