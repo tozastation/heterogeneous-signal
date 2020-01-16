@@ -1,5 +1,13 @@
 \section{実験結果}
-LoRaWAN (DR2)でのイベントごとの消費電力実測結果を下記表\ref{fig:LoRaWAN_PowerConsumption}に示す．また，LoRaWAN (DR2)でのその他値を下記表\ref{fig:LoRaWAN_Parameter}に示す．パケット到達率は，LoRaWANの送信回数に対してMQTTブローカーで受信したデータ数をもとに算出した．RSSiは，LoRaWANのGWノードが収集しMQTTブローカーに送信するため，その値を参考とした．SNRも同様である．
+LoRaWAN (DR2)でのイベントごとの消費電力実測結果を下記\ref{fig:result_power_consumtion}\ref{fig:LoRaWAN_PowerConsumption}に示す．また，LoRaWAN (DR2)でのその他値を下記表\ref{fig:LoRaWAN_Parameter}に示す．パケット到達率は，LoRaWANの送信回数に対してMQTTブローカーで受信したデータ数をもとに算出した．RSSiは，LoRaWANのGWノードが収集しMQTTブローカーに送信するため，その値を参考とした．SNRも同様である．
+
+\begin{figure}[]
+    \begin{center}
+    \includegraphics[width=15cm]{figures/LoRaWAN_消費電力実験.png}
+    \caption{消費電力実測結果}
+    \label{fig:result_power_consumtion}
+    \end{center}
+\end{figure}
 
 \begin{table}[]
     \caption{イベントごとの消費電力}\label{fig:LoRaWAN_PowerConsumption}
