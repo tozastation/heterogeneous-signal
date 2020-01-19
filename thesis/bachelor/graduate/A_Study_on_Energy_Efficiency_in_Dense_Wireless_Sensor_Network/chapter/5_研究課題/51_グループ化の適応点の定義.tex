@@ -1,4 +1,31 @@
 \section{グループ化アルゴリズムの適応点の検討}
-グループ化アルゴリズムの適応点を明らかにするため，BLEがLoRaより消費電力において有利となる条件を求める必要がある．適応点とは，既存手法に対し提案手法が消費電力削減が見込めることを表す．前項で述べたモデル式の関係が以下のようになる（なんか大小関係表した式を書く）ことである．
-（もう古い）
-計測には，LoRa，及びBLE搭載のセンサモジュールを用いて，一定時間毎にデータ送信を行う．バッテリー容量が空になった際にデータ送信量とバッテリー容量から消費電力を見積もる．
+グループ化アルゴリズムの適応点を明らかにするため，BLEがLoRaより消費電力において有利となる条件を求める必要がある．適応点とは，既存手法に対し提案手法が消費電力削減が見込めることを表す．下記に，LoRaWANのみの既存方式\ref{fig:model_lora}とLoRaWAN，BLEを用いたグループ化方式\ref{fig:model_group}の消費電力モデル式とパラメータ\ref{fig:model_param}を示す．以上のモデル式を用いて，グループ化の適応点を表した\ref{fig:model_lora_group}を下記に示す．
+
+\begin{equation}
+    \label{fig:model_lora}
+    E = W_{dr2}N (N>=2)
+\end{equation}
+
+\begin{equation}
+    \label{fig:model_group}
+    E = W_{dr2}N + W_{scan} + (N-1)W_{adv} (N>=2)
+\end{equation}
+
+\begin{table}[]
+    \caption{モデル式のパラメーター}
+    \label{fig:model_param}
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    $W_{dr2}$  & LoRaWAN（DR2）での1送信あたりの消費電力量 \\ \hline
+    $W_{scan}$ & PDの消費電力量                   \\ \hline
+    $W_{adv}$  & CDの消費電力量                   \\ \hline
+    N           & グループのノード台数                 \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{equation}
+    \label{fig:model_lora_group}
+    W_{dr2}N <= W_{dr2}N + W_{scan} + (N-1)W_{adv} (N>=2)
+\end{equation}
+
