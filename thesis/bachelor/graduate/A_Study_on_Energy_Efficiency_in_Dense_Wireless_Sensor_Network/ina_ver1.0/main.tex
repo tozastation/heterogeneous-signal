@@ -1,0 +1,185 @@
+% # 公立はこだて未来大学・卒業論文テンプレートファイル(unicode)
+%
+% ## 改訂履歴：
+% - 2019/11/18 修士論文テンプレート初版 作成者：三上貞芳
+% - 2019/12/05 卒業論文用に改変：寺沢憲吾
+%
+% ## 論文作成の手順
+%
+% 1. 以下のtexファイルを作成してください
+% - cover.tex           氏名・タイトル等の表紙情報
+% - eabstract.tex       英語アブストラクト
+% - jabstract.tex       日本語アブストラクト
+% - chapterX.tex        本文第X章
+% - publications.tex    発表・採録等の実績（確定分も含む）←※卒論では必須としない
+% - acknowledgment.tex  謝辞
+% - bibliography.tex    参考文献
+%
+% 2. このテンプレートの「TODO: 本文」以下に，作成した章に対応する\input{chapterX.tex}文を追記してください(Xは章番号)．付録の場合は「TODO: 付録」以下に追記してください．
+% 2-1. 「TODO: 付録」の部分は，必要がなければ削除してください（大半の学生は必要がないはずです）
+% 2-2. 「図表一覧等自動生成」は，初期設定ではオフにしてあります．必要があればオンにしてください（コメント化を解除してください）．
+%
+% 3. このテンプレートをuplatex環境でコンパイルし，PDFを作成します．
+%
+
+\documentclass[uplatex, a4paper, report, 11pt, oneside]{jsbook}
+
+
+% packages
+\usepackage[utf8]{inputenc}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{lmodern}             % use latin modern font
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{layout}
+
+\usepackage[hyphens]{url}
+
+% TODO: タイトル・著者等の情報
+\input{cover.tex}
+% TODO: 英語アブストラクト
+\input{eabstract.tex}
+% TODO: 日本語アブストラクト
+\input{jabstract.tex}
+
+% page size
+\textheight     = 22.6truecm
+\textwidth      = 14.7truecm
+\oddsidemargin  = 0.6truecm
+
+% header and footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlength{\footskip}{16pt}
+\fancyhf{}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter.\ #1}{}}
+\rhead{\leftmark}
+\renewcommand{\headrulewidth}{0pt}
+\cfoot{\thepage}
+\lfoot{~~ \\BA thesis, Future University Hakodate}
+\lhead{\eshorttitle}
+
+%-------------------------------------
+\begin{document}
+
+\thispagestyle{empty}
+\vspace*{4truemm}
+\begin{center}
+    \LARGE\bfseries
+    卒業論文
+\end{center}
+\vspace*{2truemm}
+\begin{center}
+    \LARGE\bfseries\jtitle
+\end{center}
+\vspace*{1em}
+\begin{center}
+    \large\bfseries 公立はこだて未来大学\par%
+    システム情報科学部~~\jdepartment\par%
+    \jcourse~~\studentID
+\end{center}
+\vspace*{1em}
+\begin{center}
+    \Large\bfseries\jauthor
+\end{center}
+\vspace*{1em}
+\begin{center}
+    \large 指導教員~~~~\jadvisor\par
+    \vspace{0.5em}
+    \large 提出日~~~~\jdate
+\end{center}
+\vspace*{3em}
+\begin{center}
+\textbf{\Large BA Thesis}\par
+\vspace*{2em}
+\textbf{\Large \etitle}\par
+\vspace*{1em}
+{\normalsize by}\par
+\vspace*{1em}
+{\large \eauthor}\par
+\vspace*{1.5em}
+School of Systems Information Science, Future University Hakodate \par
+\ecourse, \edepartment
+
+% \vspace*{0.5em}
+\normalsize Supervisor: \quad \eadvisor \par
+\vspace*{2em}
+Submitted on \edate
+\end{center}
+\vspace*{\fill}
+
+% 英語アブストラクト作成
+\newpage
+\thispagestyle{empty}
+%\vspace*{30truemm}
+\noindent
+\textbf{Abstract--}~
+\eabstract
+
+\vspace*{1em}
+\noindent
+\textbf{Keywords:}~ 
+\ekeywords
+
+% 日本語アブストラクト作成
+%\newpage
+%\thispagestyle{empty}
+\vspace*{20truemm}
+\noindent
+\textgt{概~要：}~
+\jabstract
+
+\vspace*{1em}
+\noindent
+\textgt{キーワード：}~ 
+\jkeywords
+
+
+% 目次
+\tableofcontents
+\thispagestyle{empty}
+
+% ページ番号初期化
+\setcounter{page}{0}
+
+% TODO: 本文
+% --- 背景 ---
+\input{chapter/1_序論/main.tex}
+% --- 関連技術 ---
+\input{chapter/2_関連技術/main.tex}
+% --- 関連研究 ---
+\input{chapter/3_関連研究/main.tex}
+% --- 提案手法 ---
+\input{chapter/4_提案手法/main.tex}
+% --- 研究課題 ---
+\input{chapter/5_研究課題/main.tex}
+% --- 実験と評価 ---
+\input{chapter/6_電力実測/main.tex}
+% --- 考察 ---
+\input{chapter/7_考察/main.tex}
+% --- まとめ ---
+\input{chapter/8_まとめ/main.tex}
+% 以下必要に応じてchapterX.texを作成してinput文を記入
+
+% TODO: 謝辞
+\input{acknowledgment.tex}
+
+% TODO: 発表等実績
+% \input{publications.tex}
+
+% TODO: 参考文献
+\bibliographystyle{unsrt}
+\nocite{*}
+\bibliography{thesis}
+% TODO: 付録．必要がなければ削除すること
+\appendix
+\input{chapterA1.tex} 
+
+% 図表一覧等自動生成
+\listoffigures
+\thispagestyle{plain}
+\listoftables
+\thispagestyle{plain}
+
+
+\end{document}

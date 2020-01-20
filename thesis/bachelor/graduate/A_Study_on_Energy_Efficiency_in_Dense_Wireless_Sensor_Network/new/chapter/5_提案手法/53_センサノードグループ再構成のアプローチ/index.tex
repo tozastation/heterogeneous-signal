@@ -1,0 +1,43 @@
+\section{センサノードグループ再構成のアプローチ}
+
+% ---自律型再グループ化 ---
+\subsection{自律型再グループ化}
+グループ内で，GLを交代し電力の平準化を図る自律型グループ化について述べる．全センサノードは，消費電力見積もりのため，LoRaWAN及びBLEでの通信回数を保持する．消費電力量は下記モデル式をもとに見積もり可能である．下記にシーケンス図\ref{fig:group_reconstruction_independently}を示す．
+
+\begin{enumerate}
+    \item 次のGLノードを選出するため，GMノードはセンサデータとともに，消費電力量を算出し通信内容に載せる．
+    \item GLノードはGMノードの消費電力量を基に，バッテリー容量が最も高い（消費電力量の少ない）センサノードを次のGLとして選出する．
+    \item GLノードはGMノードとの通信を切断する際にGMノードへ次のGLノードを通知する．
+    \item その後，データを集約しGWノードへ送信する．
+\end{enumerate}
+
+これにより，グループ内でのセンサノードの消費電力を平準化が見込める．
+
+\begin{figure}[]
+    \begin{center}
+    \includegraphics[width=14cm]{figures/グループ化_自律的.png}
+    \caption{自律型再グループ化}
+    \label{fig:group_reconstruction_independently}
+    \end{center}
+\end{figure}
+
+% --- 集中型再グループ化 ---
+\subsection{集中型再グループ化}
+グループの構成を変更し，WSN全体での電力の平準化を図る集中型グループ化について述べる．WSN内にセンサノードが追加されていくと，初期に構築したグループでは最適でない場合が考えられる．そのため，GWノードはセンサノードから取得したデータ(デバイス固有ID・信号強度)を用いて最適なグループを再構成する．下記にシーケンス\ref{fig:group_reconstruction_concentrately}を示す．
+
+\begin{enumerate}
+    \item GMノードは，定常時と同様センサデータをGLノードへ送信する．
+    \item GWノードは，データとして各センサノードの異種無線利用回数から消費電力量を算出する．
+    \item GWノードは，センサデータの信号強度（RSSi），消費電力量からグループ間でのノード移動やGLの交代などの組み合わせを検討し，グループを再構成する．
+    \item GWノードは，センサノードのダウンリンク時に再構成したグループを通知する．
+\end{enumerate}
+
+これにより，センサネットワーク全体の消費電力を平準化でき，センサ交換機会の削減が見込める．
+
+\begin{figure}[]
+    \begin{center}
+    \includegraphics[width=14cm]{figures/グループ化_集中的.png}
+    \caption{集中型グループ化}
+    \label{fig:group_reconstruction_concentrately}
+    \end{center}
+\end{figure}

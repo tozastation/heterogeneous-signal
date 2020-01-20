@@ -1,0 +1,24 @@
+\section{Power Consumption Analysis of Bluetooth Low Energy Commercial Products and Their Implications for IoT Applications}
+% \inaComment 句読点書き換え
+Eduaedoraら は，2018年のスマートフォンへのBluetooth搭載率が100％であることを踏まえ，消費電力を分析することで最適な低電力アプリケーションの構築を目的とし，BLE商用プラットフォームの消費電流の測定実験を行った\cite{Garcia-Espinosa2018}．BLEは，起動，データ送信，データ受信，データ処理，スリープなど様々なイベントがある．各イベントのピーク電流では，バッテリー寿命を決定することが出来ないため，
+\inaComment{
+  平均電力(表\ref{fig:power_consumption}参照)を示した．
+ !! PD, CDの意味を書いてください !!
+  }{
+  平均電流\ref{fig:power_consumption}を示した．
+  }
+電力測定に用いられたプラットフォームは，Arduino 101（Intel A-101），Cypress
+Semiconductor CY8CKIT-042-BLE-Aであった．
+
+\begin{table}
+    \raggedleft
+    \caption{消費電力}
+    \label{fig:power_consumption}
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    \textbf{種類} & \textbf{A-101 (mW)} & \textbf{Cypress (mW)} \\ \hline
+    PD          & 0.201               & 0.423                 \\ \hline
+    CD          & 0.267               & 0.054                 \\ \hline
+    \end{tabular}
+\end{table}

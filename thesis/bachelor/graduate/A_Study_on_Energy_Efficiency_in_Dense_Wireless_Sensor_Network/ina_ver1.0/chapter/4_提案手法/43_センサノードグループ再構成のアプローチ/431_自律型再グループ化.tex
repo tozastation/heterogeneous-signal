@@ -1,0 +1,19 @@
+\subsection{自律型再グループ化}
+グループ内で，GLを交代し電力の平準化を図る自律型グループ化について述べる．全センサノードは，消費電力見積もりのため，LoRaWAN及びBLEでの通信回数を保持する．消費電力量は下記モデル式をもとに見積もり可能である．下記にシーケンス図\ref{fig:group_reconstruction_independently}を示す．
+
+\begin{enumerate}
+    \item 次のGLノードを選出するため，GMノードはセンサデータとともに，消費電力量を算出し通信内容に載せる．
+    \item GLノードはGMノードの消費電力量を基に，バッテリー容量が最も高い（消費電力量の少ない）センサノードを次のGLとして選出する．
+    \item GLノードはGMノードとの通信を切断する際にGMノードへ次のGLノードを通知する．
+    \item その後，データを集約しGWノードへ送信する．
+\end{enumerate}
+
+これにより，グループ内でのセンサノードの消費電力を平準化が見込める．
+
+\begin{figure}[]
+    \begin{center}
+    \includegraphics[width=14cm]{figures/グループ化_自律的.png}
+    \caption{自律型再グループ化}
+    \label{fig:group_reconstruction_independently}
+    \end{center}
+\end{figure}
