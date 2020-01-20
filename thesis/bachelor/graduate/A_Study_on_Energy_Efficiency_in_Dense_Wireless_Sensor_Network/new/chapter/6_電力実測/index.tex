@@ -4,7 +4,7 @@
 前項５．１を満たすため，LoRaWANにおける消費電力の実測を行った．
 
 \section{実験方法}
-提案システムの各シーケンスにおいて消費電力を求めるため，起動からネットワーク参加，起動からネットワーク参加・初回送信，定常時の送信，スリープとイベントごと消費電力を計測する必要がある．実験では，市販のArduino互換LoRaWANモジュール及び消費電力計を用いて，消費電力を計測した．実験環境は，下記の表に示す．実験機材は，LoRaWANの送信機に，Arduino Uno R3\ref{fig:Arduino_Spec}，LoRaWAN Shield for Arduino\ref{fig:LoRaWAN_Spec}，受信機にLoRaWAN Gateway\ref{fig:LoRaWAN_Gateway_Spec}，消費電力測定にKotomi Premium\ref{fig:Kotomi_Spec}を用いた．LoRaWANは長距離伝送がユースケースであるため，LoRaWANのノードとGWノードを，高低差があり，約３.５kmの距離がある公立はこだて未来大学と自宅間に配置した．また計測結果を保存できる容量に限りがあるため，３試行を１セットとした．LoRaWANの設定内容を述べる．前述したLoRaWANのADR機能を適応し，スリープ時間は4秒とした．３０秒間の計測を４セット１２試行した．パケット到達率を算出するため，データ受信を確認する必要がある．本実測で利用したLoRaWANモジュールのプロバイダーは，MQTTブローカーが提供しているため，MQTTクライアント（Eclipse Mosquitto）を用いてデータを取得した．下記図\ref{fig:experiment}は，実験の様子である．
+提案システムの各シーケンスにおいて消費電力を求めるため，起動からネットワーク参加，起動からネットワーク参加・初回送信，定常時の送信，スリープとイベントごと消費電力を計測する必要がある．実験では，市販のArduino互換LoRaWANモジュール及び消費電力計を用いて，消費電力を計測した．実験環境は，下記の表に示す．実験機材は，LoRaWANの送信機に，シングルボードコンピューターであるArduino Uno R3\ref{fig:Arduino_Spec}，LoRaWAN Shield for Arduino\ref{fig:LoRaWAN_Spec}，受信機にLoRaWAN Gateway\ref{fig:LoRaWAN_Gateway_Spec}，消費電力測定にマルチメータ\ref{fig:Kotomi_Spec}を用いた．LoRaWANは長距離伝送がユースケースであるため，LoRaWANのノードとGWノードを，高低差があり，約３.５kmの距離がある公立はこだて未来大学と自宅間に配置した．また計測結果を保存できる容量に限りがあるため，３試行を１セットとした．LoRaWANの設定内容を述べる．前述したLoRaWANのADR機能を適応し，スリープ時間は4秒とした．３０秒間の計測を４セット１２試行した．パケット到達率を算出するため，データ受信を確認する必要がある．本実測で利用したLoRaWANモジュールのプロバイダーは，MQTT ブローカーが提供しているため，MQTT クライアント（Eclipse Mosquitto）を用いてデータを取得した．下記図\ref{fig:experiment}は，実験の様子である．
 
 \begin{table}[]
     \caption{ARDUINO UNO REV3}\label{fig:Arduino_Spec}
