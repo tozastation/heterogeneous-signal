@@ -1,0 +1,16 @@
+@startuml
+title 集中型再グループ化
+autonumber
+'Entity
+participant GM as member #ffbdbd
+participant GL as leader #e1f7d5
+participant NS as server #c9c9ff
+'Sequence
+Loop
+member -> leader: [BLE]\n データ送信
+leader -> server: [LoRaWAN]\n データ送信
+server -> server: 既存のノードリストをもとに\nグループを再構成
+server -> leader: [LoRaWAN]\n グループに差分があれば通知
+leader -> member: [BLE]\n 新しいリーダーの\nサービスUUIDを通知
+end
+@enduml

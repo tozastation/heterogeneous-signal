@@ -1,0 +1,12 @@
+@startuml
+title スリープ時の通信
+autonumber
+'Entity
+participant GMノード as member #e1f7d5
+participant GLノード as leader #ffbdbd
+'Sequence
+Loop Time > Time Defined
+member -> member: スリープ
+leader -> leader: [BLE]\n 自身のサービスUUIDをのせアドバタイズ
+end
+@enduml

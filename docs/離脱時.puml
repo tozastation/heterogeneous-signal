@@ -1,0 +1,18 @@
+@startuml
+title センサ離脱時
+autonumber
+'Entity
+participant GM as member #e1f7d5
+participant GL as leader #ffbdbd
+participant NS as server  #c9c9ff
+'Sequence
+member -> member: バッテリー残量がなくなり停止
+loop
+leader -> leader: [BLE]\n アドバタイズが来ない 
+leader -> server: [LoRaWAN]\n 集まったデータのみ送信
+alt COUNT > 閾値
+    server -> server: データの届かない\nセンサノードを\nグループから削除
+    server -> leader: [LoRaWAN]\n 更新したグループを通知
+end
+end
+@enduml

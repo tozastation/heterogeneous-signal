@@ -1,0 +1,37 @@
+@startuml
+'scale 0.5
+
+title センサ起動時
+'Entity
+participant センサノード1 as sensor1 #e1f7d5
+participant センサノード2 as sensor2 #ffbdbd
+participant NS as server #c9c9ff
+'Sequence
+
+loop Time > Time Defined
+    sensor1 -> sensor1: [BLE]\n アドバタイズと周囲のセンサノードをスキャン
+    sensor2 -> sensor2: [BLE]\n アドバタイズと周囲のセンサノードをスキャン
+end
+autonumber
+sensor1 -> server: [LoRaWAN]\n ネットワークへ参加し，\nスキャンしたデータを送信
+sensor2 -> server: [LoRaWAN]\n ネットワークへ参加し，\nスキャンしたデータを送信
+
+server -> server: データを収集
+server -> server: データの重複を除去
+server -> server: グループとGLを決定
+
+sensor1 -> server: [LoRaWAN]\n センサデータを送信
+server -> sensor1: [LoRaWAN]\n グループの構成を通知
+
+note left #e1f7d5
+Group Member
+end note
+
+sensor2 -> server:  [LoRaWAN]\n センサデータを送信
+server  -> sensor2: [LoRaWAN]\n グループの構成を通知
+
+note left #ffbdbd
+Group Leader
+end note
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+title 自律型再グループ化
+autonumber
+'Entity
+participant GM1 as member1 #ffbdbd
+participant GM2 as member2 #ffbdda
+participant GL as leader #e1f7d5
+participant NS as server #c9c9ff
+'Sequence
+member1 -> leader: [BLE]\n センサデータと送信回数を送信
+member2 -> leader: [BLE]\n センサデータと送信回数を送信
+leader -> leader: 総消費電力の小さいセンサノードを計算
+leader -> member1: [BLE]\n 次のリーダーの\nサービスUUIDを通知
+leader -> member2: [BLE]\n 次のリーダーの\nサービスUUIDを通知
+leader -> server: [LoRaWAM]\n データ送信
+@enduml

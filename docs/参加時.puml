@@ -1,0 +1,24 @@
+@startuml
+title センサ参加時
+autonumber
+'Entity
+participant センサノード as sensor #e1f7d5
+participant GL as leader #ffbdbd
+participant NS as server  #c9c9ff
+'Sequence
+sensor -> sensor: [BLE]\n スキャン
+alt GLが見つかった場合
+    autonumber 2
+    sensor -> sensor: GLと通信タイミングを登録
+    sensor -> leader: [BLE]\n センサデータを送信
+else GLが見つからなかった場合
+    autonumber 2
+    sensor -> server: [LoRaWAN]\n ネットワークへ参加し，\nセンサデータを送信
+    server -> sensor: [LoRaWAN]\n 参加先グループを通知
+    alt 参加先グループがある場合
+        sensor -> leader: [BLE]\n センサデータを送信
+    else 参加先グループがない場合
+        sensor -> server: [LoRaWAN]\n センサデータを送信
+    end
+end
+@endumlP

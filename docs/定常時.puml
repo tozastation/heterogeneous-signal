@@ -1,0 +1,16 @@
+@startuml
+title 定常時の通信
+autonumber
+'Entity
+participant GMノード as member #e1f7d5
+participant GLノード as leader #ffbdbd
+participant NS as server #c9c9ff
+'Sequence
+member -> leader: [BLE]\n アドバタイズ
+leader -> member: [BLE]\n スキャン要求
+member -> leader: [BLE]\n スキャン応答
+leader -> member: [BLE]\n 接続要求
+member -> leader: [BLE]\n データ送信
+leader -> server: [LoRaWAN]\n データを集約し送信
+
+@enduml
