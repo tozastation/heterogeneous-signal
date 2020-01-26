@@ -2,10 +2,10 @@
 
 \section{実験目的}
 % 何を評価するために何を測って，どうなるとOKか，まで書いてください．
-前項5.1.3（グループ化アルゴリズムの適応点の検討）で述べたように，グループ化の適応点を明らかにするため，LoRaWANにおける消費電力の実測を行う．適応点の評価については，前述したLoRaWANの既存方式と提案手法における関係式5.3に，実測した値を代入することで判断する．
+前項5.1.3グループ化アルゴリズムの適応点の検討で述べたように，グループ化の適用点を明らかにするため，LoRaWANにおける消費電力の実測を行う．適応点の評価については，前述したLoRaWANの既存方式と提案手法における関係式5.3に，実測した値を代入することで判断する．
 
 \section{実験方法}
-提案システムにおける各シーケンスにおいて消費電力を求めるため，起動からネットワーク参加，起動からネットワーク参加・初回送信，定常時の送信，スリープとイベントごと消費電力を計測する必要がある．実験では，市販のArduino互換LoRaWANモジュール及び消費電力計を用いて，消費電力を計測した．実験環境は，下記の表に示す．実験機材は，LoRaWANの送信機に，シングルボードコンピューターであるArduino Uno R3（表\ref{fig:Arduino_Spec}参照），LoRaWAN Shield for Arduino\cite{lorashield}（表\ref{fig:LoRaWAN_Spec}参照），受信機にLoRaWAN Gateway\cite{loragateway}（表\ref{fig:LoRaWAN_Gateway_Spec}），消費電力測定にマルチメータ\cite{kotomi}（表\ref{fig:Kotomi_Spec}参照）を用いた．LoRaWANは長距離伝送がユースケースであるため，LoRaWANのノードとGWノードを，高低差があり，約３.５kmの距離がある公立はこだて未来大学と自宅間に配置した．また計測結果を保存できる容量に限りがあるため，３試行を１セットとした．LoRaWANの設定内容を述べる．前述したLoRaWANのADR機能を適応し，スリープ時間は4秒とした．３０秒間の計測を４セット１２試行した．パケット到達率を算出するため，データ受信を確認する必要がある．本実測で利用したLoRaWANモジュールのプロバイダーは，MQTT ブローカーが提供しているため，MQTT クライアント\cite{mqtttool}を用いてデータを取得した．下記（図\ref{fig:experiment}参照）は，実験の様子である．
+提案システムにおける各シーケンスにおいて消費電力を求めるため，「起動からネットワーク参加」，「起動からネットワーク参加・初回送信」，「定常時の送信」，「スリープ」とイベントごと消費電力を計測する必要がある．実験では，市販のArduino互換LoRaWANモジュール及び消費電力計を用いて，消費電力を計測した．実験環境は，下記の表に示す．実験機材は，LoRaWANの送信機に，シングルボードコンピューターであるArduino Uno R3（表\ref{fig:Arduino_Spec}参照），LoRaWANモジュールに，LoRaWAN Shield for Arduino\cite{lorashield}（表\ref{fig:LoRaWAN_Spec}参照），受信機にLoRaWAN Gateway\cite{loragateway}（表\ref{fig:LoRaWAN_Gateway_Spec}），消費電力測定にマルチメータ\cite{kotomi}（表\ref{fig:Kotomi_Spec}参照）を用いた．今回利用したLoRaWANモジュールは，Senswayというプロバイダが提供しており，DR値は2-5の間で制限されていた\cite{lorawanshielduse}．LoRaWANは長距離伝送がユースケースであるため，LoRaWANのノードとGWノードを，高低差があり，約３.５kmの距離がある公立はこだて未来大学と自宅間に配置した図\ref{fig:google_map}参照．また計測結果を保存できる容量に限りがあるため，３試行を１セットとした．LoRaWANの設定内容を述べる．前述したLoRaWANのADR機能を適応し，スリープ時間は4秒とした．３０秒間の計測を４セット１２試行した．パケット到達率を算出するため，データ受信を確認する必要がある．本実測で利用したLoRaWANモジュールが送信するデータは，SensewayというLoRaWANプロバイダがMQTT ブローカーをもって提供しているため，MQTT クライアント\cite{mqtttool}を用いてデータを取得した．図\ref{fig:experiment}参照は，実験の様子である．
 
 \begin{table}[]
     \caption{ARDUINO UNO REV3}\label{fig:Arduino_Spec}
@@ -88,6 +88,14 @@
 
 \begin{figure}[]
     \begin{center}
+    \includegraphics[width=5cm]{figures/v2.0/google_map.jpg}
+    \caption{実験環境}
+    \label{fig:google_map}
+    \end{center}
+\end{figure}
+
+\begin{figure}[]
+    \begin{center}
     \includegraphics[width=5cm]{figures/experiment.jpg}
     \caption{実測実験の様子}
     \label{fig:experiment}
@@ -96,12 +104,12 @@
 
 % ----
 \section{実験結果}
-LoRaWAN (DR2)でのイベントごとの消費電力実測結果を下記(表\ref{fig:result_power_consumtion}参照）（表\ref{fig:LoRaWAN_PowerConsumption}参照）に示す．また，LoRaWAN (DR2)でのその他値を下記（表\ref{fig:LoRaWAN_Parameter}参照）に示す．パケット到達率は，LoRaWANの送信回数に対してMQTTブローカーで受信したデータ数をもとに算出した．RSSiは，LoRaWANのGWノードが収集しMQTTブローカーに送信するため，その値を参考とした．SNRも同様である．
+LoRaWAN (DR2)でのイベントごとの消費電力実測結果を図\ref{fig:result_power_consumtion}参照，表\ref{fig:LoRaWAN_PowerConsumption}参照に示す．また，LoRaWAN (DR2)でのその他値を表\ref{fig:LoRaWAN_Parameter}参照に示す．パケット到達率は，LoRaWANの送信回数に対してMQTTブローカーで受信したデータ数をもとに算出した．RSSiは，LoRaWANのGWノードが収集しMQTTブローカーに送信するため，その値を参考とした．SNRも同様である．
 
 \begin{figure}[]
     \begin{center}
     \includegraphics[width=15cm]{figures/LoRaWAN_消費電力実験.png}
-    \caption{消費電力測定における各イベント（縦軸：消費電流，横軸：時間（s））}
+    \caption{消費電力測定における各イベント（縦軸：消費電流（mA），横軸：時間（s））}
     \label{fig:result_power_consumtion}
     \end{center}
 \end{figure}
